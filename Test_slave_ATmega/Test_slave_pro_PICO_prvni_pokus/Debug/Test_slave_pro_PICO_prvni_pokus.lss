@@ -3,27 +3,27 @@ Test_slave_pro_PICO_prvni_pokus.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000001e  00800100  00000642  000006d6  2**0
+  0 .data         0000001e  00800100  0000064e  000006e2  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000642  00000000  00000000  00000094  2**1
+  1 .text         0000064e  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000018d  0080011e  0080011e  000006f4  2**0
+  2 .bss          0000018d  0080011e  0080011e  00000700  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000006f4  2**0
+  3 .comment      00000030  00000000  00000000  00000700  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000724  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000730  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000098  00000000  00000000  00000764  2**0
+  5 .debug_aranges 00000098  00000000  00000000  00000770  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000b55  00000000  00000000  000007fc  2**0
+  6 .debug_info   00000b55  00000000  00000000  00000808  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000007e0  00000000  00000000  00001351  2**0
+  7 .debug_abbrev 000007e0  00000000  00000000  0000135d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000069d  00000000  00000000  00001b31  2**0
+  8 .debug_line   0000069d  00000000  00000000  00001b3d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000140  00000000  00000000  000021d0  2**2
+  9 .debug_frame  00000140  00000000  00000000  000021dc  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000561  00000000  00000000  00002310  2**0
+ 10 .debug_str    00000555  00000000  00000000  0000231c  2**0
                   CONTENTS, READONLY, DEBUGGING
  11 .debug_loc    00000286  00000000  00000000  00002871  2**0
                   CONTENTS, READONLY, DEBUGGING
@@ -72,7 +72,7 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e2 e4       	ldi	r30, 0x42	; 66
+  7a:	ee e4       	ldi	r30, 0x4E	; 78
   7c:	f6 e0       	ldi	r31, 0x06	; 6
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
@@ -94,8 +94,8 @@ Disassembly of section .text:
   94:	ab 3a       	cpi	r26, 0xAB	; 171
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
-  9a:	0e 94 0a 03 	call	0x614	; 0x614 <main>
-  9e:	0c 94 1f 03 	jmp	0x63e	; 0x63e <_exit>
+  9a:	0e 94 10 03 	call	0x620	; 0x620 <main>
+  9e:	0c 94 25 03 	jmp	0x64a	; 0x64a <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -205,808 +205,814 @@ void I2C_received(uint8_t received_data)
  17a:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  17e:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
  182:	00 97       	sbiw	r24, 0x00	; 0
- 184:	31 f1       	breq	.+76     	; 0x1d2 <I2C_received+0x5c>
- 186:	3b c0       	rjmp	.+118    	; 0x1fe <I2C_received+0x88>
+ 184:	49 f1       	breq	.+82     	; 0x1d8 <I2C_received+0x62>
+ 186:	3e c0       	rjmp	.+124    	; 0x204 <I2C_received+0x8e>
 	{
 		for(int i = 0; i < 8; i++){
-			Buffer[Pocitadlo_prijmu_radky][i][0] = (data >> i) & 1;
+			Buffer[Pocitadlo_prijmu_radky][i][0] = (data >> 7 - i) & 1;
  188:	60 91 24 01 	lds	r22, 0x0124	; 0x800124 <Pocitadlo_prijmu_radky>
  18c:	70 91 25 01 	lds	r23, 0x0125	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
  190:	80 91 2a 01 	lds	r24, 0x012A	; 0x80012a <data>
- 194:	90 e0       	ldi	r25, 0x00	; 0
- 196:	02 2e       	mov	r0, r18
- 198:	02 c0       	rjmp	.+4      	; 0x19e <I2C_received+0x28>
- 19a:	95 95       	asr	r25
- 19c:	87 95       	ror	r24
- 19e:	0a 94       	dec	r0
- 1a0:	e2 f7       	brpl	.-8      	; 0x19a <I2C_received+0x24>
- 1a2:	81 70       	andi	r24, 0x01	; 1
- 1a4:	99 27       	eor	r25, r25
- 1a6:	f9 01       	movw	r30, r18
- 1a8:	ee 0f       	add	r30, r30
- 1aa:	ff 1f       	adc	r31, r31
- 1ac:	e2 0f       	add	r30, r18
- 1ae:	f3 1f       	adc	r31, r19
- 1b0:	ee 0f       	add	r30, r30
- 1b2:	ff 1f       	adc	r31, r31
- 1b4:	a0 e3       	ldi	r26, 0x30	; 48
- 1b6:	a6 9f       	mul	r26, r22
- 1b8:	a0 01       	movw	r20, r0
- 1ba:	a7 9f       	mul	r26, r23
- 1bc:	50 0d       	add	r21, r0
- 1be:	11 24       	eor	r1, r1
- 1c0:	e4 0f       	add	r30, r20
- 1c2:	f5 1f       	adc	r31, r21
- 1c4:	e5 5d       	subi	r30, 0xD5	; 213
- 1c6:	fe 4f       	sbci	r31, 0xFE	; 254
- 1c8:	91 83       	std	Z+1, r25	; 0x01
- 1ca:	80 83       	st	Z, r24
+ 194:	47 e0       	ldi	r20, 0x07	; 7
+ 196:	50 e0       	ldi	r21, 0x00	; 0
+ 198:	42 1b       	sub	r20, r18
+ 19a:	53 0b       	sbc	r21, r19
+ 19c:	90 e0       	ldi	r25, 0x00	; 0
+ 19e:	02 c0       	rjmp	.+4      	; 0x1a4 <I2C_received+0x2e>
+ 1a0:	95 95       	asr	r25
+ 1a2:	87 95       	ror	r24
+ 1a4:	4a 95       	dec	r20
+ 1a6:	e2 f7       	brpl	.-8      	; 0x1a0 <I2C_received+0x2a>
+ 1a8:	81 70       	andi	r24, 0x01	; 1
+ 1aa:	99 27       	eor	r25, r25
+ 1ac:	f9 01       	movw	r30, r18
+ 1ae:	ee 0f       	add	r30, r30
+ 1b0:	ff 1f       	adc	r31, r31
+ 1b2:	e2 0f       	add	r30, r18
+ 1b4:	f3 1f       	adc	r31, r19
+ 1b6:	ee 0f       	add	r30, r30
+ 1b8:	ff 1f       	adc	r31, r31
+ 1ba:	a0 e3       	ldi	r26, 0x30	; 48
+ 1bc:	a6 9f       	mul	r26, r22
+ 1be:	a0 01       	movw	r20, r0
+ 1c0:	a7 9f       	mul	r26, r23
+ 1c2:	50 0d       	add	r21, r0
+ 1c4:	11 24       	eor	r1, r1
+ 1c6:	e4 0f       	add	r30, r20
+ 1c8:	f5 1f       	adc	r31, r21
+ 1ca:	e5 5d       	subi	r30, 0xD5	; 213
+ 1cc:	fe 4f       	sbci	r31, 0xFE	; 254
+ 1ce:	91 83       	std	Z+1, r25	; 0x01
+ 1d0:	80 83       	st	Z, r24
 {
 	data = received_data;
 		
 	if (Rezim == 0)
 	{
 		for(int i = 0; i < 8; i++){
- 1cc:	2f 5f       	subi	r18, 0xFF	; 255
- 1ce:	3f 4f       	sbci	r19, 0xFF	; 255
- 1d0:	02 c0       	rjmp	.+4      	; 0x1d6 <I2C_received+0x60>
- 1d2:	20 e0       	ldi	r18, 0x00	; 0
- 1d4:	30 e0       	ldi	r19, 0x00	; 0
- 1d6:	28 30       	cpi	r18, 0x08	; 8
- 1d8:	31 05       	cpc	r19, r1
- 1da:	b4 f2       	brlt	.-84     	; 0x188 <I2C_received+0x12>
-			Buffer[Pocitadlo_prijmu_radky][i][0] = (data >> i) & 1;
+ 1d2:	2f 5f       	subi	r18, 0xFF	; 255
+ 1d4:	3f 4f       	sbci	r19, 0xFF	; 255
+ 1d6:	02 c0       	rjmp	.+4      	; 0x1dc <I2C_received+0x66>
+ 1d8:	20 e0       	ldi	r18, 0x00	; 0
+ 1da:	30 e0       	ldi	r19, 0x00	; 0
+ 1dc:	28 30       	cpi	r18, 0x08	; 8
+ 1de:	31 05       	cpc	r19, r1
+ 1e0:	9c f2       	brlt	.-90     	; 0x188 <I2C_received+0x12>
+			Buffer[Pocitadlo_prijmu_radky][i][0] = (data >> 7 - i) & 1;
 		}
 		Pocitadlo_prijmu_radky++;
- 1dc:	80 91 24 01 	lds	r24, 0x0124	; 0x800124 <Pocitadlo_prijmu_radky>
- 1e0:	90 91 25 01 	lds	r25, 0x0125	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
- 1e4:	01 96       	adiw	r24, 0x01	; 1
- 1e6:	90 93 25 01 	sts	0x0125, r25	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
- 1ea:	80 93 24 01 	sts	0x0124, r24	; 0x800124 <Pocitadlo_prijmu_radky>
+ 1e2:	80 91 24 01 	lds	r24, 0x0124	; 0x800124 <Pocitadlo_prijmu_radky>
+ 1e6:	90 91 25 01 	lds	r25, 0x0125	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
+ 1ea:	01 96       	adiw	r24, 0x01	; 1
+ 1ec:	90 93 25 01 	sts	0x0125, r25	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
+ 1f0:	80 93 24 01 	sts	0x0124, r24	; 0x800124 <Pocitadlo_prijmu_radky>
 		if (Pocitadlo_prijmu_radky == 8) Pocitadlo_prijmu_radky = 0;
- 1ee:	08 97       	sbiw	r24, 0x08	; 8
- 1f0:	09 f0       	breq	.+2      	; 0x1f4 <I2C_received+0x7e>
- 1f2:	5e c0       	rjmp	.+188    	; 0x2b0 <I2C_received+0x13a>
- 1f4:	10 92 25 01 	sts	0x0125, r1	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
- 1f8:	10 92 24 01 	sts	0x0124, r1	; 0x800124 <Pocitadlo_prijmu_radky>
- 1fc:	08 95       	ret
+ 1f4:	08 97       	sbiw	r24, 0x08	; 8
+ 1f6:	09 f0       	breq	.+2      	; 0x1fa <I2C_received+0x84>
+ 1f8:	61 c0       	rjmp	.+194    	; 0x2bc <I2C_received+0x146>
+ 1fa:	10 92 25 01 	sts	0x0125, r1	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
+ 1fe:	10 92 24 01 	sts	0x0124, r1	; 0x800124 <Pocitadlo_prijmu_radky>
+ 202:	08 95       	ret
 	}
 	else if (Rezim == 1){
- 1fe:	01 97       	sbiw	r24, 0x01	; 1
- 200:	09 f0       	breq	.+2      	; 0x204 <I2C_received+0x8e>
- 202:	56 c0       	rjmp	.+172    	; 0x2b0 <I2C_received+0x13a>
- 204:	32 c0       	rjmp	.+100    	; 0x26a <I2C_received+0xf4>
+ 204:	01 97       	sbiw	r24, 0x01	; 1
+ 206:	09 f0       	breq	.+2      	; 0x20a <I2C_received+0x94>
+ 208:	59 c0       	rjmp	.+178    	; 0x2bc <I2C_received+0x146>
+ 20a:	35 c0       	rjmp	.+106    	; 0x276 <I2C_received+0x100>
 		for(int i = 0; i < 8; i++){
-			Buffer[Pocitadlo_prijmu_radky][i][Pocitadlo_prijmu_barvy] = (data >> i) & 1;
- 206:	80 91 24 01 	lds	r24, 0x0124	; 0x800124 <Pocitadlo_prijmu_radky>
- 20a:	90 91 25 01 	lds	r25, 0x0125	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
- 20e:	e0 91 22 01 	lds	r30, 0x0122	; 0x800122 <Pocitadlo_prijmu_barvy>
- 212:	f0 91 23 01 	lds	r31, 0x0123	; 0x800123 <Pocitadlo_prijmu_barvy+0x1>
- 216:	40 91 2a 01 	lds	r20, 0x012A	; 0x80012a <data>
- 21a:	50 e0       	ldi	r21, 0x00	; 0
- 21c:	06 2e       	mov	r0, r22
- 21e:	02 c0       	rjmp	.+4      	; 0x224 <I2C_received+0xae>
- 220:	55 95       	asr	r21
- 222:	47 95       	ror	r20
- 224:	0a 94       	dec	r0
- 226:	e2 f7       	brpl	.-8      	; 0x220 <I2C_received+0xaa>
- 228:	41 70       	andi	r20, 0x01	; 1
- 22a:	55 27       	eor	r21, r21
- 22c:	db 01       	movw	r26, r22
- 22e:	aa 0f       	add	r26, r26
- 230:	bb 1f       	adc	r27, r27
- 232:	a6 0f       	add	r26, r22
- 234:	b7 1f       	adc	r27, r23
- 236:	9c 01       	movw	r18, r24
- 238:	22 0f       	add	r18, r18
- 23a:	33 1f       	adc	r19, r19
- 23c:	82 0f       	add	r24, r18
- 23e:	93 1f       	adc	r25, r19
- 240:	9c 01       	movw	r18, r24
- 242:	22 0f       	add	r18, r18
- 244:	33 1f       	adc	r19, r19
- 246:	22 0f       	add	r18, r18
- 248:	33 1f       	adc	r19, r19
- 24a:	22 0f       	add	r18, r18
- 24c:	33 1f       	adc	r19, r19
- 24e:	cd 01       	movw	r24, r26
- 250:	82 0f       	add	r24, r18
- 252:	93 1f       	adc	r25, r19
- 254:	e8 0f       	add	r30, r24
- 256:	f9 1f       	adc	r31, r25
- 258:	ee 0f       	add	r30, r30
- 25a:	ff 1f       	adc	r31, r31
- 25c:	e5 5d       	subi	r30, 0xD5	; 213
- 25e:	fe 4f       	sbci	r31, 0xFE	; 254
- 260:	51 83       	std	Z+1, r21	; 0x01
- 262:	40 83       	st	Z, r20
+			Buffer[Pocitadlo_prijmu_radky][i][Pocitadlo_prijmu_barvy] = (data >> 7 - i) & 1;
+ 20c:	80 91 24 01 	lds	r24, 0x0124	; 0x800124 <Pocitadlo_prijmu_radky>
+ 210:	90 91 25 01 	lds	r25, 0x0125	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
+ 214:	e0 91 22 01 	lds	r30, 0x0122	; 0x800122 <Pocitadlo_prijmu_barvy>
+ 218:	f0 91 23 01 	lds	r31, 0x0123	; 0x800123 <Pocitadlo_prijmu_barvy+0x1>
+ 21c:	40 91 2a 01 	lds	r20, 0x012A	; 0x80012a <data>
+ 220:	27 e0       	ldi	r18, 0x07	; 7
+ 222:	30 e0       	ldi	r19, 0x00	; 0
+ 224:	26 1b       	sub	r18, r22
+ 226:	37 0b       	sbc	r19, r23
+ 228:	50 e0       	ldi	r21, 0x00	; 0
+ 22a:	02 c0       	rjmp	.+4      	; 0x230 <I2C_received+0xba>
+ 22c:	55 95       	asr	r21
+ 22e:	47 95       	ror	r20
+ 230:	2a 95       	dec	r18
+ 232:	e2 f7       	brpl	.-8      	; 0x22c <I2C_received+0xb6>
+ 234:	41 70       	andi	r20, 0x01	; 1
+ 236:	55 27       	eor	r21, r21
+ 238:	db 01       	movw	r26, r22
+ 23a:	aa 0f       	add	r26, r26
+ 23c:	bb 1f       	adc	r27, r27
+ 23e:	a6 0f       	add	r26, r22
+ 240:	b7 1f       	adc	r27, r23
+ 242:	9c 01       	movw	r18, r24
+ 244:	22 0f       	add	r18, r18
+ 246:	33 1f       	adc	r19, r19
+ 248:	82 0f       	add	r24, r18
+ 24a:	93 1f       	adc	r25, r19
+ 24c:	9c 01       	movw	r18, r24
+ 24e:	22 0f       	add	r18, r18
+ 250:	33 1f       	adc	r19, r19
+ 252:	22 0f       	add	r18, r18
+ 254:	33 1f       	adc	r19, r19
+ 256:	22 0f       	add	r18, r18
+ 258:	33 1f       	adc	r19, r19
+ 25a:	cd 01       	movw	r24, r26
+ 25c:	82 0f       	add	r24, r18
+ 25e:	93 1f       	adc	r25, r19
+ 260:	e8 0f       	add	r30, r24
+ 262:	f9 1f       	adc	r31, r25
+ 264:	ee 0f       	add	r30, r30
+ 266:	ff 1f       	adc	r31, r31
+ 268:	e5 5d       	subi	r30, 0xD5	; 213
+ 26a:	fe 4f       	sbci	r31, 0xFE	; 254
+ 26c:	51 83       	std	Z+1, r21	; 0x01
+ 26e:	40 83       	st	Z, r20
 		}
 		Pocitadlo_prijmu_radky++;
 		if (Pocitadlo_prijmu_radky == 8) Pocitadlo_prijmu_radky = 0;
 	}
 	else if (Rezim == 1){
 		for(int i = 0; i < 8; i++){
- 264:	6f 5f       	subi	r22, 0xFF	; 255
- 266:	7f 4f       	sbci	r23, 0xFF	; 255
- 268:	02 c0       	rjmp	.+4      	; 0x26e <I2C_received+0xf8>
- 26a:	60 e0       	ldi	r22, 0x00	; 0
- 26c:	70 e0       	ldi	r23, 0x00	; 0
- 26e:	68 30       	cpi	r22, 0x08	; 8
- 270:	71 05       	cpc	r23, r1
- 272:	4c f2       	brlt	.-110    	; 0x206 <I2C_received+0x90>
-			Buffer[Pocitadlo_prijmu_radky][i][Pocitadlo_prijmu_barvy] = (data >> i) & 1;
+ 270:	6f 5f       	subi	r22, 0xFF	; 255
+ 272:	7f 4f       	sbci	r23, 0xFF	; 255
+ 274:	02 c0       	rjmp	.+4      	; 0x27a <I2C_received+0x104>
+ 276:	60 e0       	ldi	r22, 0x00	; 0
+ 278:	70 e0       	ldi	r23, 0x00	; 0
+ 27a:	68 30       	cpi	r22, 0x08	; 8
+ 27c:	71 05       	cpc	r23, r1
+ 27e:	34 f2       	brlt	.-116    	; 0x20c <I2C_received+0x96>
+			Buffer[Pocitadlo_prijmu_radky][i][Pocitadlo_prijmu_barvy] = (data >> 7 - i) & 1;
 		}
 		Pocitadlo_prijmu_barvy++;
- 274:	80 91 22 01 	lds	r24, 0x0122	; 0x800122 <Pocitadlo_prijmu_barvy>
- 278:	90 91 23 01 	lds	r25, 0x0123	; 0x800123 <Pocitadlo_prijmu_barvy+0x1>
- 27c:	01 96       	adiw	r24, 0x01	; 1
- 27e:	90 93 23 01 	sts	0x0123, r25	; 0x800123 <Pocitadlo_prijmu_barvy+0x1>
- 282:	80 93 22 01 	sts	0x0122, r24	; 0x800122 <Pocitadlo_prijmu_barvy>
+ 280:	80 91 22 01 	lds	r24, 0x0122	; 0x800122 <Pocitadlo_prijmu_barvy>
+ 284:	90 91 23 01 	lds	r25, 0x0123	; 0x800123 <Pocitadlo_prijmu_barvy+0x1>
+ 288:	01 96       	adiw	r24, 0x01	; 1
+ 28a:	90 93 23 01 	sts	0x0123, r25	; 0x800123 <Pocitadlo_prijmu_barvy+0x1>
+ 28e:	80 93 22 01 	sts	0x0122, r24	; 0x800122 <Pocitadlo_prijmu_barvy>
 		if (Pocitadlo_prijmu_barvy == 3){
- 286:	03 97       	sbiw	r24, 0x03	; 3
- 288:	99 f4       	brne	.+38     	; 0x2b0 <I2C_received+0x13a>
+ 292:	03 97       	sbiw	r24, 0x03	; 3
+ 294:	99 f4       	brne	.+38     	; 0x2bc <I2C_received+0x146>
 			Pocitadlo_prijmu_barvy = 0;
- 28a:	10 92 23 01 	sts	0x0123, r1	; 0x800123 <Pocitadlo_prijmu_barvy+0x1>
- 28e:	10 92 22 01 	sts	0x0122, r1	; 0x800122 <Pocitadlo_prijmu_barvy>
+ 296:	10 92 23 01 	sts	0x0123, r1	; 0x800123 <Pocitadlo_prijmu_barvy+0x1>
+ 29a:	10 92 22 01 	sts	0x0122, r1	; 0x800122 <Pocitadlo_prijmu_barvy>
 			Pocitadlo_prijmu_radky++;
- 292:	80 91 24 01 	lds	r24, 0x0124	; 0x800124 <Pocitadlo_prijmu_radky>
- 296:	90 91 25 01 	lds	r25, 0x0125	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
- 29a:	01 96       	adiw	r24, 0x01	; 1
- 29c:	90 93 25 01 	sts	0x0125, r25	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
- 2a0:	80 93 24 01 	sts	0x0124, r24	; 0x800124 <Pocitadlo_prijmu_radky>
+ 29e:	80 91 24 01 	lds	r24, 0x0124	; 0x800124 <Pocitadlo_prijmu_radky>
+ 2a2:	90 91 25 01 	lds	r25, 0x0125	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
+ 2a6:	01 96       	adiw	r24, 0x01	; 1
+ 2a8:	90 93 25 01 	sts	0x0125, r25	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
+ 2ac:	80 93 24 01 	sts	0x0124, r24	; 0x800124 <Pocitadlo_prijmu_radky>
 			if (Pocitadlo_prijmu_radky == 8) Pocitadlo_prijmu_radky = 0;
- 2a4:	08 97       	sbiw	r24, 0x08	; 8
- 2a6:	21 f4       	brne	.+8      	; 0x2b0 <I2C_received+0x13a>
- 2a8:	10 92 25 01 	sts	0x0125, r1	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
- 2ac:	10 92 24 01 	sts	0x0124, r1	; 0x800124 <Pocitadlo_prijmu_radky>
- 2b0:	08 95       	ret
+ 2b0:	08 97       	sbiw	r24, 0x08	; 8
+ 2b2:	21 f4       	brne	.+8      	; 0x2bc <I2C_received+0x146>
+ 2b4:	10 92 25 01 	sts	0x0125, r1	; 0x800125 <Pocitadlo_prijmu_radky+0x1>
+ 2b8:	10 92 24 01 	sts	0x0124, r1	; 0x800124 <Pocitadlo_prijmu_radky>
+ 2bc:	08 95       	ret
 
-000002b2 <I2C_requested>:
+000002be <I2C_requested>:
 		}
 	}
 }
 
 void I2C_requested()
 {
- 2b2:	08 95       	ret
+ 2be:	08 95       	ret
 
-000002b4 <InicializaceRegistru>:
+000002c0 <InicializaceRegistru>:
 }
 
 void InicializaceRegistru()
 {
 	// Vyclearování všech registrù pøi novém zapnutí
 	for(int i = 0; i < 8; i++)
- 2b4:	20 e0       	ldi	r18, 0x00	; 0
- 2b6:	30 e0       	ldi	r19, 0x00	; 0
- 2b8:	12 c0       	rjmp	.+36     	; 0x2de <InicializaceRegistru+0x2a>
+ 2c0:	20 e0       	ldi	r18, 0x00	; 0
+ 2c2:	30 e0       	ldi	r19, 0x00	; 0
+ 2c4:	12 c0       	rjmp	.+36     	; 0x2ea <InicializaceRegistru+0x2a>
 	{
 		PORTD |= 1 << Radky[i];
- 2ba:	4b b1       	in	r20, 0x0b	; 11
- 2bc:	f9 01       	movw	r30, r18
- 2be:	ee 0f       	add	r30, r30
- 2c0:	ff 1f       	adc	r31, r31
- 2c2:	e8 5f       	subi	r30, 0xF8	; 248
- 2c4:	fe 4f       	sbci	r31, 0xFE	; 254
- 2c6:	81 e0       	ldi	r24, 0x01	; 1
- 2c8:	90 e0       	ldi	r25, 0x00	; 0
- 2ca:	00 80       	ld	r0, Z
- 2cc:	02 c0       	rjmp	.+4      	; 0x2d2 <InicializaceRegistru+0x1e>
- 2ce:	88 0f       	add	r24, r24
- 2d0:	99 1f       	adc	r25, r25
- 2d2:	0a 94       	dec	r0
- 2d4:	e2 f7       	brpl	.-8      	; 0x2ce <InicializaceRegistru+0x1a>
- 2d6:	84 2b       	or	r24, r20
- 2d8:	8b b9       	out	0x0b, r24	; 11
+ 2c6:	4b b1       	in	r20, 0x0b	; 11
+ 2c8:	f9 01       	movw	r30, r18
+ 2ca:	ee 0f       	add	r30, r30
+ 2cc:	ff 1f       	adc	r31, r31
+ 2ce:	e8 5f       	subi	r30, 0xF8	; 248
+ 2d0:	fe 4f       	sbci	r31, 0xFE	; 254
+ 2d2:	81 e0       	ldi	r24, 0x01	; 1
+ 2d4:	90 e0       	ldi	r25, 0x00	; 0
+ 2d6:	00 80       	ld	r0, Z
+ 2d8:	02 c0       	rjmp	.+4      	; 0x2de <InicializaceRegistru+0x1e>
+ 2da:	88 0f       	add	r24, r24
+ 2dc:	99 1f       	adc	r25, r25
+ 2de:	0a 94       	dec	r0
+ 2e0:	e2 f7       	brpl	.-8      	; 0x2da <InicializaceRegistru+0x1a>
+ 2e2:	84 2b       	or	r24, r20
+ 2e4:	8b b9       	out	0x0b, r24	; 11
 }
 
 void InicializaceRegistru()
 {
 	// Vyclearování všech registrù pøi novém zapnutí
 	for(int i = 0; i < 8; i++)
- 2da:	2f 5f       	subi	r18, 0xFF	; 255
- 2dc:	3f 4f       	sbci	r19, 0xFF	; 255
- 2de:	28 30       	cpi	r18, 0x08	; 8
- 2e0:	31 05       	cpc	r19, r1
- 2e2:	5c f3       	brlt	.-42     	; 0x2ba <InicializaceRegistru+0x6>
+ 2e6:	2f 5f       	subi	r18, 0xFF	; 255
+ 2e8:	3f 4f       	sbci	r19, 0xFF	; 255
+ 2ea:	28 30       	cpi	r18, 0x08	; 8
+ 2ec:	31 05       	cpc	r19, r1
+ 2ee:	5c f3       	brlt	.-42     	; 0x2c6 <InicializaceRegistru+0x6>
 	{
 		PORTD |= 1 << Radky[i];
 	}
 
 	PORTB &= 255 - (1 << ClearRegistru);
- 2e4:	35 b1       	in	r19, 0x05	; 5
- 2e6:	e6 e0       	ldi	r30, 0x06	; 6
- 2e8:	f1 e0       	ldi	r31, 0x01	; 1
- 2ea:	81 e0       	ldi	r24, 0x01	; 1
- 2ec:	90 e0       	ldi	r25, 0x00	; 0
- 2ee:	ac 01       	movw	r20, r24
- 2f0:	00 80       	ld	r0, Z
- 2f2:	02 c0       	rjmp	.+4      	; 0x2f8 <InicializaceRegistru+0x44>
- 2f4:	44 0f       	add	r20, r20
- 2f6:	55 1f       	adc	r21, r21
- 2f8:	0a 94       	dec	r0
- 2fa:	e2 f7       	brpl	.-8      	; 0x2f4 <InicializaceRegistru+0x40>
- 2fc:	24 2f       	mov	r18, r20
- 2fe:	20 95       	com	r18
- 300:	23 23       	and	r18, r19
- 302:	25 b9       	out	0x05, r18	; 5
+ 2f0:	35 b1       	in	r19, 0x05	; 5
+ 2f2:	e6 e0       	ldi	r30, 0x06	; 6
+ 2f4:	f1 e0       	ldi	r31, 0x01	; 1
+ 2f6:	81 e0       	ldi	r24, 0x01	; 1
+ 2f8:	90 e0       	ldi	r25, 0x00	; 0
+ 2fa:	ac 01       	movw	r20, r24
+ 2fc:	00 80       	ld	r0, Z
+ 2fe:	02 c0       	rjmp	.+4      	; 0x304 <InicializaceRegistru+0x44>
+ 300:	44 0f       	add	r20, r20
+ 302:	55 1f       	adc	r21, r21
+ 304:	0a 94       	dec	r0
+ 306:	e2 f7       	brpl	.-8      	; 0x300 <InicializaceRegistru+0x40>
+ 308:	24 2f       	mov	r18, r20
+ 30a:	20 95       	com	r18
+ 30c:	23 23       	and	r18, r19
+ 30e:	25 b9       	out	0x05, r18	; 5
 	PORTB |= 1 << ClearRegistru;
- 304:	25 b1       	in	r18, 0x05	; 5
- 306:	00 80       	ld	r0, Z
- 308:	02 c0       	rjmp	.+4      	; 0x30e <InicializaceRegistru+0x5a>
- 30a:	88 0f       	add	r24, r24
- 30c:	99 1f       	adc	r25, r25
- 30e:	0a 94       	dec	r0
- 310:	e2 f7       	brpl	.-8      	; 0x30a <InicializaceRegistru+0x56>
- 312:	82 2b       	or	r24, r18
- 314:	85 b9       	out	0x05, r24	; 5
+ 310:	25 b1       	in	r18, 0x05	; 5
+ 312:	00 80       	ld	r0, Z
+ 314:	02 c0       	rjmp	.+4      	; 0x31a <InicializaceRegistru+0x5a>
+ 316:	88 0f       	add	r24, r24
+ 318:	99 1f       	adc	r25, r25
+ 31a:	0a 94       	dec	r0
+ 31c:	e2 f7       	brpl	.-8      	; 0x316 <InicializaceRegistru+0x56>
+ 31e:	82 2b       	or	r24, r18
+ 320:	85 b9       	out	0x05, r24	; 5
 
 	// Zhasnutí všeho (na stranì registrù)
 	for(int i = 0; i < 3; i++)
- 316:	20 e0       	ldi	r18, 0x00	; 0
- 318:	30 e0       	ldi	r19, 0x00	; 0
- 31a:	12 c0       	rjmp	.+36     	; 0x340 <InicializaceRegistru+0x8c>
+ 322:	20 e0       	ldi	r18, 0x00	; 0
+ 324:	30 e0       	ldi	r19, 0x00	; 0
+ 326:	12 c0       	rjmp	.+36     	; 0x34c <InicializaceRegistru+0x8c>
 	{
 		PORTB |= 1 << VstupyRegistru[i];
- 31c:	45 b1       	in	r20, 0x05	; 5
- 31e:	f9 01       	movw	r30, r18
- 320:	ee 0f       	add	r30, r30
- 322:	ff 1f       	adc	r31, r31
- 324:	e8 5e       	subi	r30, 0xE8	; 232
- 326:	fe 4f       	sbci	r31, 0xFE	; 254
- 328:	81 e0       	ldi	r24, 0x01	; 1
- 32a:	90 e0       	ldi	r25, 0x00	; 0
- 32c:	00 80       	ld	r0, Z
- 32e:	02 c0       	rjmp	.+4      	; 0x334 <InicializaceRegistru+0x80>
- 330:	88 0f       	add	r24, r24
- 332:	99 1f       	adc	r25, r25
- 334:	0a 94       	dec	r0
- 336:	e2 f7       	brpl	.-8      	; 0x330 <InicializaceRegistru+0x7c>
- 338:	84 2b       	or	r24, r20
- 33a:	85 b9       	out	0x05, r24	; 5
+ 328:	45 b1       	in	r20, 0x05	; 5
+ 32a:	f9 01       	movw	r30, r18
+ 32c:	ee 0f       	add	r30, r30
+ 32e:	ff 1f       	adc	r31, r31
+ 330:	e8 5e       	subi	r30, 0xE8	; 232
+ 332:	fe 4f       	sbci	r31, 0xFE	; 254
+ 334:	81 e0       	ldi	r24, 0x01	; 1
+ 336:	90 e0       	ldi	r25, 0x00	; 0
+ 338:	00 80       	ld	r0, Z
+ 33a:	02 c0       	rjmp	.+4      	; 0x340 <InicializaceRegistru+0x80>
+ 33c:	88 0f       	add	r24, r24
+ 33e:	99 1f       	adc	r25, r25
+ 340:	0a 94       	dec	r0
+ 342:	e2 f7       	brpl	.-8      	; 0x33c <InicializaceRegistru+0x7c>
+ 344:	84 2b       	or	r24, r20
+ 346:	85 b9       	out	0x05, r24	; 5
 
 	PORTB &= 255 - (1 << ClearRegistru);
 	PORTB |= 1 << ClearRegistru;
 
 	// Zhasnutí všeho (na stranì registrù)
 	for(int i = 0; i < 3; i++)
- 33c:	2f 5f       	subi	r18, 0xFF	; 255
- 33e:	3f 4f       	sbci	r19, 0xFF	; 255
- 340:	23 30       	cpi	r18, 0x03	; 3
- 342:	31 05       	cpc	r19, r1
- 344:	5c f3       	brlt	.-42     	; 0x31c <InicializaceRegistru+0x68>
- 346:	40 e0       	ldi	r20, 0x00	; 0
- 348:	50 e0       	ldi	r21, 0x00	; 0
- 34a:	1a c0       	rjmp	.+52     	; 0x380 <InicializaceRegistru+0xcc>
+ 348:	2f 5f       	subi	r18, 0xFF	; 255
+ 34a:	3f 4f       	sbci	r19, 0xFF	; 255
+ 34c:	23 30       	cpi	r18, 0x03	; 3
+ 34e:	31 05       	cpc	r19, r1
+ 350:	5c f3       	brlt	.-42     	; 0x328 <InicializaceRegistru+0x68>
+ 352:	40 e0       	ldi	r20, 0x00	; 0
+ 354:	50 e0       	ldi	r21, 0x00	; 0
+ 356:	1a c0       	rjmp	.+52     	; 0x38c <InicializaceRegistru+0xcc>
 		PORTB |= 1 << VstupyRegistru[i];
 	}
 
 	for(int i = 0; i < 8; i++)
 	{
 		PORTB |= 1 << HodinyRegistru;
- 34c:	65 b1       	in	r22, 0x05	; 5
- 34e:	e8 e2       	ldi	r30, 0x28	; 40
- 350:	f1 e0       	ldi	r31, 0x01	; 1
- 352:	81 e0       	ldi	r24, 0x01	; 1
- 354:	90 e0       	ldi	r25, 0x00	; 0
- 356:	9c 01       	movw	r18, r24
- 358:	00 80       	ld	r0, Z
- 35a:	02 c0       	rjmp	.+4      	; 0x360 <InicializaceRegistru+0xac>
- 35c:	22 0f       	add	r18, r18
- 35e:	33 1f       	adc	r19, r19
- 360:	0a 94       	dec	r0
- 362:	e2 f7       	brpl	.-8      	; 0x35c <InicializaceRegistru+0xa8>
- 364:	26 2b       	or	r18, r22
- 366:	25 b9       	out	0x05, r18	; 5
+ 358:	65 b1       	in	r22, 0x05	; 5
+ 35a:	e8 e2       	ldi	r30, 0x28	; 40
+ 35c:	f1 e0       	ldi	r31, 0x01	; 1
+ 35e:	81 e0       	ldi	r24, 0x01	; 1
+ 360:	90 e0       	ldi	r25, 0x00	; 0
+ 362:	9c 01       	movw	r18, r24
+ 364:	00 80       	ld	r0, Z
+ 366:	02 c0       	rjmp	.+4      	; 0x36c <InicializaceRegistru+0xac>
+ 368:	22 0f       	add	r18, r18
+ 36a:	33 1f       	adc	r19, r19
+ 36c:	0a 94       	dec	r0
+ 36e:	e2 f7       	brpl	.-8      	; 0x368 <InicializaceRegistru+0xa8>
+ 370:	26 2b       	or	r18, r22
+ 372:	25 b9       	out	0x05, r18	; 5
 		PORTB &= 255 - (1 << HodinyRegistru);
- 368:	25 b1       	in	r18, 0x05	; 5
- 36a:	00 80       	ld	r0, Z
- 36c:	02 c0       	rjmp	.+4      	; 0x372 <InicializaceRegistru+0xbe>
- 36e:	88 0f       	add	r24, r24
- 370:	99 1f       	adc	r25, r25
- 372:	0a 94       	dec	r0
- 374:	e2 f7       	brpl	.-8      	; 0x36e <InicializaceRegistru+0xba>
- 376:	80 95       	com	r24
- 378:	82 23       	and	r24, r18
- 37a:	85 b9       	out	0x05, r24	; 5
+ 374:	25 b1       	in	r18, 0x05	; 5
+ 376:	00 80       	ld	r0, Z
+ 378:	02 c0       	rjmp	.+4      	; 0x37e <InicializaceRegistru+0xbe>
+ 37a:	88 0f       	add	r24, r24
+ 37c:	99 1f       	adc	r25, r25
+ 37e:	0a 94       	dec	r0
+ 380:	e2 f7       	brpl	.-8      	; 0x37a <InicializaceRegistru+0xba>
+ 382:	80 95       	com	r24
+ 384:	82 23       	and	r24, r18
+ 386:	85 b9       	out	0x05, r24	; 5
 	for(int i = 0; i < 3; i++)
 	{
 		PORTB |= 1 << VstupyRegistru[i];
 	}
 
 	for(int i = 0; i < 8; i++)
- 37c:	4f 5f       	subi	r20, 0xFF	; 255
- 37e:	5f 4f       	sbci	r21, 0xFF	; 255
- 380:	48 30       	cpi	r20, 0x08	; 8
- 382:	51 05       	cpc	r21, r1
- 384:	1c f3       	brlt	.-58     	; 0x34c <InicializaceRegistru+0x98>
+ 388:	4f 5f       	subi	r20, 0xFF	; 255
+ 38a:	5f 4f       	sbci	r21, 0xFF	; 255
+ 38c:	48 30       	cpi	r20, 0x08	; 8
+ 38e:	51 05       	cpc	r21, r1
+ 390:	1c f3       	brlt	.-58     	; 0x358 <InicializaceRegistru+0x98>
 	PORTC &= 255 - (1 << VstupyRegistru[0]);
 	PORTC |= 1 << HodinyRegistru;
 	PORTC &= 255 - (1 << HodinyRegistru);
 	PORTC|= 1 << VstupyRegistru[0];
 	*/
 }
- 386:	08 95       	ret
+ 392:	08 95       	ret
 
-00000388 <VynulovaniBufferu>:
+00000394 <VynulovaniBufferu>:
 
 void VynulovaniBufferu()
 {
 	for (int i = 0; i < 8; i++)
- 388:	60 e0       	ldi	r22, 0x00	; 0
- 38a:	70 e0       	ldi	r23, 0x00	; 0
- 38c:	2e c0       	rjmp	.+92     	; 0x3ea <VynulovaniBufferu+0x62>
+ 394:	60 e0       	ldi	r22, 0x00	; 0
+ 396:	70 e0       	ldi	r23, 0x00	; 0
+ 398:	2e c0       	rjmp	.+92     	; 0x3f6 <VynulovaniBufferu+0x62>
 	{
 		for (int j = 0; j < 8; j++)
 		{
 			for (int k = 0; k < 3; k++)
 			{
 				Buffer[i][j][k] = 0;
- 38e:	fa 01       	movw	r30, r20
- 390:	ee 0f       	add	r30, r30
- 392:	ff 1f       	adc	r31, r31
- 394:	df 01       	movw	r26, r30
- 396:	a4 0f       	add	r26, r20
- 398:	b5 1f       	adc	r27, r21
- 39a:	cb 01       	movw	r24, r22
- 39c:	88 0f       	add	r24, r24
- 39e:	99 1f       	adc	r25, r25
- 3a0:	fc 01       	movw	r30, r24
- 3a2:	e6 0f       	add	r30, r22
- 3a4:	f7 1f       	adc	r31, r23
- 3a6:	ee 0f       	add	r30, r30
- 3a8:	ff 1f       	adc	r31, r31
- 3aa:	ee 0f       	add	r30, r30
- 3ac:	ff 1f       	adc	r31, r31
- 3ae:	ee 0f       	add	r30, r30
- 3b0:	ff 1f       	adc	r31, r31
- 3b2:	ea 0f       	add	r30, r26
- 3b4:	fb 1f       	adc	r31, r27
- 3b6:	e2 0f       	add	r30, r18
- 3b8:	f3 1f       	adc	r31, r19
+ 39a:	fa 01       	movw	r30, r20
+ 39c:	ee 0f       	add	r30, r30
+ 39e:	ff 1f       	adc	r31, r31
+ 3a0:	df 01       	movw	r26, r30
+ 3a2:	a4 0f       	add	r26, r20
+ 3a4:	b5 1f       	adc	r27, r21
+ 3a6:	cb 01       	movw	r24, r22
+ 3a8:	88 0f       	add	r24, r24
+ 3aa:	99 1f       	adc	r25, r25
+ 3ac:	fc 01       	movw	r30, r24
+ 3ae:	e6 0f       	add	r30, r22
+ 3b0:	f7 1f       	adc	r31, r23
+ 3b2:	ee 0f       	add	r30, r30
+ 3b4:	ff 1f       	adc	r31, r31
+ 3b6:	ee 0f       	add	r30, r30
+ 3b8:	ff 1f       	adc	r31, r31
  3ba:	ee 0f       	add	r30, r30
  3bc:	ff 1f       	adc	r31, r31
- 3be:	e5 5d       	subi	r30, 0xD5	; 213
- 3c0:	fe 4f       	sbci	r31, 0xFE	; 254
- 3c2:	11 82       	std	Z+1, r1	; 0x01
- 3c4:	10 82       	st	Z, r1
+ 3be:	ea 0f       	add	r30, r26
+ 3c0:	fb 1f       	adc	r31, r27
+ 3c2:	e2 0f       	add	r30, r18
+ 3c4:	f3 1f       	adc	r31, r19
+ 3c6:	ee 0f       	add	r30, r30
+ 3c8:	ff 1f       	adc	r31, r31
+ 3ca:	e5 5d       	subi	r30, 0xD5	; 213
+ 3cc:	fe 4f       	sbci	r31, 0xFE	; 254
+ 3ce:	11 82       	std	Z+1, r1	; 0x01
+ 3d0:	10 82       	st	Z, r1
 {
 	for (int i = 0; i < 8; i++)
 	{
 		for (int j = 0; j < 8; j++)
 		{
 			for (int k = 0; k < 3; k++)
- 3c6:	2f 5f       	subi	r18, 0xFF	; 255
- 3c8:	3f 4f       	sbci	r19, 0xFF	; 255
- 3ca:	02 c0       	rjmp	.+4      	; 0x3d0 <VynulovaniBufferu+0x48>
- 3cc:	20 e0       	ldi	r18, 0x00	; 0
- 3ce:	30 e0       	ldi	r19, 0x00	; 0
- 3d0:	23 30       	cpi	r18, 0x03	; 3
- 3d2:	31 05       	cpc	r19, r1
- 3d4:	e4 f2       	brlt	.-72     	; 0x38e <VynulovaniBufferu+0x6>
+ 3d2:	2f 5f       	subi	r18, 0xFF	; 255
+ 3d4:	3f 4f       	sbci	r19, 0xFF	; 255
+ 3d6:	02 c0       	rjmp	.+4      	; 0x3dc <VynulovaniBufferu+0x48>
+ 3d8:	20 e0       	ldi	r18, 0x00	; 0
+ 3da:	30 e0       	ldi	r19, 0x00	; 0
+ 3dc:	23 30       	cpi	r18, 0x03	; 3
+ 3de:	31 05       	cpc	r19, r1
+ 3e0:	e4 f2       	brlt	.-72     	; 0x39a <VynulovaniBufferu+0x6>
 
 void VynulovaniBufferu()
 {
 	for (int i = 0; i < 8; i++)
 	{
 		for (int j = 0; j < 8; j++)
- 3d6:	4f 5f       	subi	r20, 0xFF	; 255
- 3d8:	5f 4f       	sbci	r21, 0xFF	; 255
- 3da:	02 c0       	rjmp	.+4      	; 0x3e0 <VynulovaniBufferu+0x58>
- 3dc:	40 e0       	ldi	r20, 0x00	; 0
- 3de:	50 e0       	ldi	r21, 0x00	; 0
- 3e0:	48 30       	cpi	r20, 0x08	; 8
- 3e2:	51 05       	cpc	r21, r1
- 3e4:	9c f3       	brlt	.-26     	; 0x3cc <VynulovaniBufferu+0x44>
+ 3e2:	4f 5f       	subi	r20, 0xFF	; 255
+ 3e4:	5f 4f       	sbci	r21, 0xFF	; 255
+ 3e6:	02 c0       	rjmp	.+4      	; 0x3ec <VynulovaniBufferu+0x58>
+ 3e8:	40 e0       	ldi	r20, 0x00	; 0
+ 3ea:	50 e0       	ldi	r21, 0x00	; 0
+ 3ec:	48 30       	cpi	r20, 0x08	; 8
+ 3ee:	51 05       	cpc	r21, r1
+ 3f0:	9c f3       	brlt	.-26     	; 0x3d8 <VynulovaniBufferu+0x44>
 	*/
 }
 
 void VynulovaniBufferu()
 {
 	for (int i = 0; i < 8; i++)
- 3e6:	6f 5f       	subi	r22, 0xFF	; 255
- 3e8:	7f 4f       	sbci	r23, 0xFF	; 255
- 3ea:	68 30       	cpi	r22, 0x08	; 8
- 3ec:	71 05       	cpc	r23, r1
- 3ee:	b4 f3       	brlt	.-20     	; 0x3dc <VynulovaniBufferu+0x54>
+ 3f2:	6f 5f       	subi	r22, 0xFF	; 255
+ 3f4:	7f 4f       	sbci	r23, 0xFF	; 255
+ 3f6:	68 30       	cpi	r22, 0x08	; 8
+ 3f8:	71 05       	cpc	r23, r1
+ 3fa:	b4 f3       	brlt	.-20     	; 0x3e8 <VynulovaniBufferu+0x54>
 			{
 				Buffer[i][j][k] = 0;
 			}
 		}
 	}
 }
- 3f0:	08 95       	ret
+ 3fc:	08 95       	ret
 
-000003f2 <PosunRegistru>:
+000003fe <PosunRegistru>:
 
 void PosunRegistru()
 {
 	// Do registrù se pošle 0 (rozsvícení) je-li správá chvíle
 	if (KontinuitaRegistru == 7)
- 3f2:	80 91 26 01 	lds	r24, 0x0126	; 0x800126 <KontinuitaRegistru>
- 3f6:	90 91 27 01 	lds	r25, 0x0127	; 0x800127 <KontinuitaRegistru+0x1>
- 3fa:	87 30       	cpi	r24, 0x07	; 7
- 3fc:	91 05       	cpc	r25, r1
- 3fe:	71 f4       	brne	.+28     	; 0x41c <__EEPROM_REGION_LENGTH__+0x1c>
+ 3fe:	80 91 26 01 	lds	r24, 0x0126	; 0x800126 <KontinuitaRegistru>
+ 402:	90 91 27 01 	lds	r25, 0x0127	; 0x800127 <KontinuitaRegistru+0x1>
+ 406:	87 30       	cpi	r24, 0x07	; 7
+ 408:	91 05       	cpc	r25, r1
+ 40a:	71 f4       	brne	.+28     	; 0x428 <__EEPROM_REGION_LENGTH__+0x28>
 	{
 		PORTB &= 255 - (1 << VstupyRegistru[0]);
- 400:	25 b1       	in	r18, 0x05	; 5
- 402:	81 e0       	ldi	r24, 0x01	; 1
- 404:	90 e0       	ldi	r25, 0x00	; 0
- 406:	00 90 18 01 	lds	r0, 0x0118	; 0x800118 <VstupyRegistru>
- 40a:	02 c0       	rjmp	.+4      	; 0x410 <__EEPROM_REGION_LENGTH__+0x10>
- 40c:	88 0f       	add	r24, r24
- 40e:	99 1f       	adc	r25, r25
- 410:	0a 94       	dec	r0
- 412:	e2 f7       	brpl	.-8      	; 0x40c <__EEPROM_REGION_LENGTH__+0xc>
- 414:	80 95       	com	r24
- 416:	82 23       	and	r24, r18
- 418:	85 b9       	out	0x05, r24	; 5
- 41a:	20 c0       	rjmp	.+64     	; 0x45c <__EEPROM_REGION_LENGTH__+0x5c>
+ 40c:	25 b1       	in	r18, 0x05	; 5
+ 40e:	81 e0       	ldi	r24, 0x01	; 1
+ 410:	90 e0       	ldi	r25, 0x00	; 0
+ 412:	00 90 18 01 	lds	r0, 0x0118	; 0x800118 <VstupyRegistru>
+ 416:	02 c0       	rjmp	.+4      	; 0x41c <__EEPROM_REGION_LENGTH__+0x1c>
+ 418:	88 0f       	add	r24, r24
+ 41a:	99 1f       	adc	r25, r25
+ 41c:	0a 94       	dec	r0
+ 41e:	e2 f7       	brpl	.-8      	; 0x418 <__EEPROM_REGION_LENGTH__+0x18>
+ 420:	80 95       	com	r24
+ 422:	82 23       	and	r24, r18
+ 424:	85 b9       	out	0x05, r24	; 5
+ 426:	20 c0       	rjmp	.+64     	; 0x468 <__EEPROM_REGION_LENGTH__+0x68>
 	}
 	else if (KontinuitaRegistru == 15)
- 41c:	8f 30       	cpi	r24, 0x0F	; 15
- 41e:	91 05       	cpc	r25, r1
- 420:	71 f4       	brne	.+28     	; 0x43e <__EEPROM_REGION_LENGTH__+0x3e>
+ 428:	8f 30       	cpi	r24, 0x0F	; 15
+ 42a:	91 05       	cpc	r25, r1
+ 42c:	71 f4       	brne	.+28     	; 0x44a <__EEPROM_REGION_LENGTH__+0x4a>
 	{
 		PORTB &= 255 - (1 << VstupyRegistru[1]);
- 422:	25 b1       	in	r18, 0x05	; 5
- 424:	81 e0       	ldi	r24, 0x01	; 1
- 426:	90 e0       	ldi	r25, 0x00	; 0
- 428:	00 90 1a 01 	lds	r0, 0x011A	; 0x80011a <VstupyRegistru+0x2>
- 42c:	02 c0       	rjmp	.+4      	; 0x432 <__EEPROM_REGION_LENGTH__+0x32>
- 42e:	88 0f       	add	r24, r24
- 430:	99 1f       	adc	r25, r25
- 432:	0a 94       	dec	r0
- 434:	e2 f7       	brpl	.-8      	; 0x42e <__EEPROM_REGION_LENGTH__+0x2e>
- 436:	80 95       	com	r24
- 438:	82 23       	and	r24, r18
- 43a:	85 b9       	out	0x05, r24	; 5
- 43c:	0f c0       	rjmp	.+30     	; 0x45c <__EEPROM_REGION_LENGTH__+0x5c>
+ 42e:	25 b1       	in	r18, 0x05	; 5
+ 430:	81 e0       	ldi	r24, 0x01	; 1
+ 432:	90 e0       	ldi	r25, 0x00	; 0
+ 434:	00 90 1a 01 	lds	r0, 0x011A	; 0x80011a <VstupyRegistru+0x2>
+ 438:	02 c0       	rjmp	.+4      	; 0x43e <__EEPROM_REGION_LENGTH__+0x3e>
+ 43a:	88 0f       	add	r24, r24
+ 43c:	99 1f       	adc	r25, r25
+ 43e:	0a 94       	dec	r0
+ 440:	e2 f7       	brpl	.-8      	; 0x43a <__EEPROM_REGION_LENGTH__+0x3a>
+ 442:	80 95       	com	r24
+ 444:	82 23       	and	r24, r18
+ 446:	85 b9       	out	0x05, r24	; 5
+ 448:	0f c0       	rjmp	.+30     	; 0x468 <__EEPROM_REGION_LENGTH__+0x68>
 	}
 	else if (KontinuitaRegistru == 23)
- 43e:	47 97       	sbiw	r24, 0x17	; 23
- 440:	69 f4       	brne	.+26     	; 0x45c <__EEPROM_REGION_LENGTH__+0x5c>
+ 44a:	47 97       	sbiw	r24, 0x17	; 23
+ 44c:	69 f4       	brne	.+26     	; 0x468 <__EEPROM_REGION_LENGTH__+0x68>
 	{
 		PORTB &= 255 - (1 << VstupyRegistru[2]);
- 442:	25 b1       	in	r18, 0x05	; 5
- 444:	81 e0       	ldi	r24, 0x01	; 1
- 446:	90 e0       	ldi	r25, 0x00	; 0
- 448:	00 90 1c 01 	lds	r0, 0x011C	; 0x80011c <VstupyRegistru+0x4>
- 44c:	02 c0       	rjmp	.+4      	; 0x452 <__EEPROM_REGION_LENGTH__+0x52>
- 44e:	88 0f       	add	r24, r24
- 450:	99 1f       	adc	r25, r25
- 452:	0a 94       	dec	r0
- 454:	e2 f7       	brpl	.-8      	; 0x44e <__EEPROM_REGION_LENGTH__+0x4e>
- 456:	80 95       	com	r24
- 458:	82 23       	and	r24, r18
- 45a:	85 b9       	out	0x05, r24	; 5
+ 44e:	25 b1       	in	r18, 0x05	; 5
+ 450:	81 e0       	ldi	r24, 0x01	; 1
+ 452:	90 e0       	ldi	r25, 0x00	; 0
+ 454:	00 90 1c 01 	lds	r0, 0x011C	; 0x80011c <VstupyRegistru+0x4>
+ 458:	02 c0       	rjmp	.+4      	; 0x45e <__EEPROM_REGION_LENGTH__+0x5e>
+ 45a:	88 0f       	add	r24, r24
+ 45c:	99 1f       	adc	r25, r25
+ 45e:	0a 94       	dec	r0
+ 460:	e2 f7       	brpl	.-8      	; 0x45a <__EEPROM_REGION_LENGTH__+0x5a>
+ 462:	80 95       	com	r24
+ 464:	82 23       	and	r24, r18
+ 466:	85 b9       	out	0x05, r24	; 5
 	}
 	
 	// Hodiny posunou registr
 	PORTB |= 1 << HodinyRegistru;
- 45c:	45 b1       	in	r20, 0x05	; 5
- 45e:	e8 e2       	ldi	r30, 0x28	; 40
- 460:	f1 e0       	ldi	r31, 0x01	; 1
- 462:	81 e0       	ldi	r24, 0x01	; 1
- 464:	90 e0       	ldi	r25, 0x00	; 0
- 466:	9c 01       	movw	r18, r24
- 468:	00 80       	ld	r0, Z
- 46a:	02 c0       	rjmp	.+4      	; 0x470 <__EEPROM_REGION_LENGTH__+0x70>
- 46c:	22 0f       	add	r18, r18
- 46e:	33 1f       	adc	r19, r19
- 470:	0a 94       	dec	r0
- 472:	e2 f7       	brpl	.-8      	; 0x46c <__EEPROM_REGION_LENGTH__+0x6c>
- 474:	24 2b       	or	r18, r20
- 476:	25 b9       	out	0x05, r18	; 5
+ 468:	45 b1       	in	r20, 0x05	; 5
+ 46a:	e8 e2       	ldi	r30, 0x28	; 40
+ 46c:	f1 e0       	ldi	r31, 0x01	; 1
+ 46e:	81 e0       	ldi	r24, 0x01	; 1
+ 470:	90 e0       	ldi	r25, 0x00	; 0
+ 472:	9c 01       	movw	r18, r24
+ 474:	00 80       	ld	r0, Z
+ 476:	02 c0       	rjmp	.+4      	; 0x47c <__EEPROM_REGION_LENGTH__+0x7c>
+ 478:	22 0f       	add	r18, r18
+ 47a:	33 1f       	adc	r19, r19
+ 47c:	0a 94       	dec	r0
+ 47e:	e2 f7       	brpl	.-8      	; 0x478 <__EEPROM_REGION_LENGTH__+0x78>
+ 480:	24 2b       	or	r18, r20
+ 482:	25 b9       	out	0x05, r18	; 5
 	PORTB &= 255 - (1 << HodinyRegistru);
- 478:	25 b1       	in	r18, 0x05	; 5
- 47a:	00 80       	ld	r0, Z
- 47c:	02 c0       	rjmp	.+4      	; 0x482 <__EEPROM_REGION_LENGTH__+0x82>
- 47e:	88 0f       	add	r24, r24
- 480:	99 1f       	adc	r25, r25
- 482:	0a 94       	dec	r0
- 484:	e2 f7       	brpl	.-8      	; 0x47e <__EEPROM_REGION_LENGTH__+0x7e>
- 486:	80 95       	com	r24
- 488:	82 23       	and	r24, r18
- 48a:	85 b9       	out	0x05, r24	; 5
+ 484:	25 b1       	in	r18, 0x05	; 5
+ 486:	00 80       	ld	r0, Z
+ 488:	02 c0       	rjmp	.+4      	; 0x48e <__EEPROM_REGION_LENGTH__+0x8e>
+ 48a:	88 0f       	add	r24, r24
+ 48c:	99 1f       	adc	r25, r25
+ 48e:	0a 94       	dec	r0
+ 490:	e2 f7       	brpl	.-8      	; 0x48a <__EEPROM_REGION_LENGTH__+0x8a>
+ 492:	80 95       	com	r24
+ 494:	82 23       	and	r24, r18
+ 496:	85 b9       	out	0x05, r24	; 5
 	
 	// Pøípadné 0 posílané do registrù se zase zahsnout (pošle se 1)
 	for (int i = 0; i < 3; i++)
- 48c:	20 e0       	ldi	r18, 0x00	; 0
- 48e:	30 e0       	ldi	r19, 0x00	; 0
- 490:	12 c0       	rjmp	.+36     	; 0x4b6 <__EEPROM_REGION_LENGTH__+0xb6>
+ 498:	20 e0       	ldi	r18, 0x00	; 0
+ 49a:	30 e0       	ldi	r19, 0x00	; 0
+ 49c:	12 c0       	rjmp	.+36     	; 0x4c2 <__EEPROM_REGION_LENGTH__+0xc2>
 	{
 		PORTB |= 1 << VstupyRegistru[i];
- 492:	45 b1       	in	r20, 0x05	; 5
- 494:	f9 01       	movw	r30, r18
- 496:	ee 0f       	add	r30, r30
- 498:	ff 1f       	adc	r31, r31
- 49a:	e8 5e       	subi	r30, 0xE8	; 232
- 49c:	fe 4f       	sbci	r31, 0xFE	; 254
- 49e:	81 e0       	ldi	r24, 0x01	; 1
- 4a0:	90 e0       	ldi	r25, 0x00	; 0
- 4a2:	00 80       	ld	r0, Z
- 4a4:	02 c0       	rjmp	.+4      	; 0x4aa <__EEPROM_REGION_LENGTH__+0xaa>
- 4a6:	88 0f       	add	r24, r24
- 4a8:	99 1f       	adc	r25, r25
- 4aa:	0a 94       	dec	r0
- 4ac:	e2 f7       	brpl	.-8      	; 0x4a6 <__EEPROM_REGION_LENGTH__+0xa6>
- 4ae:	84 2b       	or	r24, r20
- 4b0:	85 b9       	out	0x05, r24	; 5
+ 49e:	45 b1       	in	r20, 0x05	; 5
+ 4a0:	f9 01       	movw	r30, r18
+ 4a2:	ee 0f       	add	r30, r30
+ 4a4:	ff 1f       	adc	r31, r31
+ 4a6:	e8 5e       	subi	r30, 0xE8	; 232
+ 4a8:	fe 4f       	sbci	r31, 0xFE	; 254
+ 4aa:	81 e0       	ldi	r24, 0x01	; 1
+ 4ac:	90 e0       	ldi	r25, 0x00	; 0
+ 4ae:	00 80       	ld	r0, Z
+ 4b0:	02 c0       	rjmp	.+4      	; 0x4b6 <__EEPROM_REGION_LENGTH__+0xb6>
+ 4b2:	88 0f       	add	r24, r24
+ 4b4:	99 1f       	adc	r25, r25
+ 4b6:	0a 94       	dec	r0
+ 4b8:	e2 f7       	brpl	.-8      	; 0x4b2 <__EEPROM_REGION_LENGTH__+0xb2>
+ 4ba:	84 2b       	or	r24, r20
+ 4bc:	85 b9       	out	0x05, r24	; 5
 	// Hodiny posunou registr
 	PORTB |= 1 << HodinyRegistru;
 	PORTB &= 255 - (1 << HodinyRegistru);
 	
 	// Pøípadné 0 posílané do registrù se zase zahsnout (pošle se 1)
 	for (int i = 0; i < 3; i++)
- 4b2:	2f 5f       	subi	r18, 0xFF	; 255
- 4b4:	3f 4f       	sbci	r19, 0xFF	; 255
- 4b6:	23 30       	cpi	r18, 0x03	; 3
- 4b8:	31 05       	cpc	r19, r1
- 4ba:	5c f3       	brlt	.-42     	; 0x492 <__EEPROM_REGION_LENGTH__+0x92>
+ 4be:	2f 5f       	subi	r18, 0xFF	; 255
+ 4c0:	3f 4f       	sbci	r19, 0xFF	; 255
+ 4c2:	23 30       	cpi	r18, 0x03	; 3
+ 4c4:	31 05       	cpc	r19, r1
+ 4c6:	5c f3       	brlt	.-42     	; 0x49e <__EEPROM_REGION_LENGTH__+0x9e>
 	{
 		PORTB |= 1 << VstupyRegistru[i];
 	}
 
 	// Zmìna hodnot pomocných promìnných pro buffer a KontinuituRegistru
 	KontinuitaRegistru += 1;
- 4bc:	80 91 26 01 	lds	r24, 0x0126	; 0x800126 <KontinuitaRegistru>
- 4c0:	90 91 27 01 	lds	r25, 0x0127	; 0x800127 <KontinuitaRegistru+0x1>
- 4c4:	01 96       	adiw	r24, 0x01	; 1
- 4c6:	90 93 27 01 	sts	0x0127, r25	; 0x800127 <KontinuitaRegistru+0x1>
- 4ca:	80 93 26 01 	sts	0x0126, r24	; 0x800126 <KontinuitaRegistru>
+ 4c8:	80 91 26 01 	lds	r24, 0x0126	; 0x800126 <KontinuitaRegistru>
+ 4cc:	90 91 27 01 	lds	r25, 0x0127	; 0x800127 <KontinuitaRegistru+0x1>
+ 4d0:	01 96       	adiw	r24, 0x01	; 1
+ 4d2:	90 93 27 01 	sts	0x0127, r25	; 0x800127 <KontinuitaRegistru+0x1>
+ 4d6:	80 93 26 01 	sts	0x0126, r24	; 0x800126 <KontinuitaRegistru>
 	if (KontinuitaRegistru == 24)
- 4ce:	48 97       	sbiw	r24, 0x18	; 24
- 4d0:	21 f4       	brne	.+8      	; 0x4da <__EEPROM_REGION_LENGTH__+0xda>
+ 4da:	48 97       	sbiw	r24, 0x18	; 24
+ 4dc:	21 f4       	brne	.+8      	; 0x4e6 <__EEPROM_REGION_LENGTH__+0xe6>
 	{
 		KontinuitaRegistru = 0;
- 4d2:	10 92 27 01 	sts	0x0127, r1	; 0x800127 <KontinuitaRegistru+0x1>
- 4d6:	10 92 26 01 	sts	0x0126, r1	; 0x800126 <KontinuitaRegistru>
+ 4de:	10 92 27 01 	sts	0x0127, r1	; 0x800127 <KontinuitaRegistru+0x1>
+ 4e2:	10 92 26 01 	sts	0x0126, r1	; 0x800126 <KontinuitaRegistru>
 	}
 	CisloBarvy += 1;
- 4da:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <CisloBarvy>
- 4de:	90 91 05 01 	lds	r25, 0x0105	; 0x800105 <CisloBarvy+0x1>
- 4e2:	01 96       	adiw	r24, 0x01	; 1
- 4e4:	90 93 05 01 	sts	0x0105, r25	; 0x800105 <CisloBarvy+0x1>
- 4e8:	80 93 04 01 	sts	0x0104, r24	; 0x800104 <CisloBarvy>
+ 4e6:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <CisloBarvy>
+ 4ea:	90 91 05 01 	lds	r25, 0x0105	; 0x800105 <CisloBarvy+0x1>
+ 4ee:	01 96       	adiw	r24, 0x01	; 1
+ 4f0:	90 93 05 01 	sts	0x0105, r25	; 0x800105 <CisloBarvy+0x1>
+ 4f4:	80 93 04 01 	sts	0x0104, r24	; 0x800104 <CisloBarvy>
 	if (CisloBarvy == 3)
- 4ec:	03 97       	sbiw	r24, 0x03	; 3
- 4ee:	99 f4       	brne	.+38     	; 0x516 <__EEPROM_REGION_LENGTH__+0x116>
+ 4f8:	03 97       	sbiw	r24, 0x03	; 3
+ 4fa:	99 f4       	brne	.+38     	; 0x522 <__EEPROM_REGION_LENGTH__+0x122>
 	{
 		CisloBarvy = 0;
- 4f0:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <CisloBarvy+0x1>
- 4f4:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <CisloBarvy>
+ 4fc:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <CisloBarvy+0x1>
+ 500:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <CisloBarvy>
 		CisloSloupce += 1;
- 4f8:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <CisloSloupce>
- 4fc:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <CisloSloupce+0x1>
- 500:	01 96       	adiw	r24, 0x01	; 1
- 502:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <CisloSloupce+0x1>
- 506:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <CisloSloupce>
+ 504:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <CisloSloupce>
+ 508:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <CisloSloupce+0x1>
+ 50c:	01 96       	adiw	r24, 0x01	; 1
+ 50e:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <CisloSloupce+0x1>
+ 512:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <CisloSloupce>
 		if (CisloSloupce == 8)
- 50a:	08 97       	sbiw	r24, 0x08	; 8
- 50c:	21 f4       	brne	.+8      	; 0x516 <__EEPROM_REGION_LENGTH__+0x116>
+ 516:	08 97       	sbiw	r24, 0x08	; 8
+ 518:	21 f4       	brne	.+8      	; 0x522 <__EEPROM_REGION_LENGTH__+0x122>
 		{
 			CisloSloupce = 0;
- 50e:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <CisloSloupce+0x1>
- 512:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <CisloSloupce>
- 516:	08 95       	ret
+ 51a:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <CisloSloupce+0x1>
+ 51e:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <CisloSloupce>
+ 522:	08 95       	ret
 
-00000518 <ZhasnutiRadku>:
+00000524 <ZhasnutiRadku>:
 	}
 }
 
 void ZhasnutiRadku()
 {
 	for (int i = 0; i < 8; i++)
- 518:	20 e0       	ldi	r18, 0x00	; 0
- 51a:	30 e0       	ldi	r19, 0x00	; 0
- 51c:	13 c0       	rjmp	.+38     	; 0x544 <ZhasnutiRadku+0x2c>
+ 524:	20 e0       	ldi	r18, 0x00	; 0
+ 526:	30 e0       	ldi	r19, 0x00	; 0
+ 528:	13 c0       	rjmp	.+38     	; 0x550 <ZhasnutiRadku+0x2c>
 	{
 		PORTD &= 255 - (1 << Radky[i]);
- 51e:	4b b1       	in	r20, 0x0b	; 11
- 520:	f9 01       	movw	r30, r18
- 522:	ee 0f       	add	r30, r30
- 524:	ff 1f       	adc	r31, r31
- 526:	e8 5f       	subi	r30, 0xF8	; 248
- 528:	fe 4f       	sbci	r31, 0xFE	; 254
- 52a:	81 e0       	ldi	r24, 0x01	; 1
- 52c:	90 e0       	ldi	r25, 0x00	; 0
- 52e:	00 80       	ld	r0, Z
- 530:	02 c0       	rjmp	.+4      	; 0x536 <ZhasnutiRadku+0x1e>
- 532:	88 0f       	add	r24, r24
- 534:	99 1f       	adc	r25, r25
- 536:	0a 94       	dec	r0
- 538:	e2 f7       	brpl	.-8      	; 0x532 <ZhasnutiRadku+0x1a>
- 53a:	80 95       	com	r24
- 53c:	84 23       	and	r24, r20
- 53e:	8b b9       	out	0x0b, r24	; 11
+ 52a:	4b b1       	in	r20, 0x0b	; 11
+ 52c:	f9 01       	movw	r30, r18
+ 52e:	ee 0f       	add	r30, r30
+ 530:	ff 1f       	adc	r31, r31
+ 532:	e8 5f       	subi	r30, 0xF8	; 248
+ 534:	fe 4f       	sbci	r31, 0xFE	; 254
+ 536:	81 e0       	ldi	r24, 0x01	; 1
+ 538:	90 e0       	ldi	r25, 0x00	; 0
+ 53a:	00 80       	ld	r0, Z
+ 53c:	02 c0       	rjmp	.+4      	; 0x542 <ZhasnutiRadku+0x1e>
+ 53e:	88 0f       	add	r24, r24
+ 540:	99 1f       	adc	r25, r25
+ 542:	0a 94       	dec	r0
+ 544:	e2 f7       	brpl	.-8      	; 0x53e <ZhasnutiRadku+0x1a>
+ 546:	80 95       	com	r24
+ 548:	84 23       	and	r24, r20
+ 54a:	8b b9       	out	0x0b, r24	; 11
 	}
 }
 
 void ZhasnutiRadku()
 {
 	for (int i = 0; i < 8; i++)
- 540:	2f 5f       	subi	r18, 0xFF	; 255
- 542:	3f 4f       	sbci	r19, 0xFF	; 255
- 544:	28 30       	cpi	r18, 0x08	; 8
- 546:	31 05       	cpc	r19, r1
- 548:	54 f3       	brlt	.-44     	; 0x51e <ZhasnutiRadku+0x6>
+ 54c:	2f 5f       	subi	r18, 0xFF	; 255
+ 54e:	3f 4f       	sbci	r19, 0xFF	; 255
+ 550:	28 30       	cpi	r18, 0x08	; 8
+ 552:	31 05       	cpc	r19, r1
+ 554:	54 f3       	brlt	.-44     	; 0x52a <ZhasnutiRadku+0x6>
 	{
 		PORTD &= 255 - (1 << Radky[i]);
 	}
 }
- 54a:	08 95       	ret
+ 556:	08 95       	ret
 
-0000054c <RozsviceniRadkuDleBufferu>:
+00000558 <RozsviceniRadkuDleBufferu>:
 
 void RozsviceniRadkuDleBufferu()
 {
 	for (int i = 0; i < 8; i++)
- 54c:	20 e0       	ldi	r18, 0x00	; 0
- 54e:	30 e0       	ldi	r19, 0x00	; 0
- 550:	48 c0       	rjmp	.+144    	; 0x5e2 <RozsviceniRadkuDleBufferu+0x96>
+ 558:	20 e0       	ldi	r18, 0x00	; 0
+ 55a:	30 e0       	ldi	r19, 0x00	; 0
+ 55c:	48 c0       	rjmp	.+144    	; 0x5ee <RozsviceniRadkuDleBufferu+0x96>
 	{
 		if (Buffer[i][CisloSloupce][CisloBarvy])
- 552:	e0 91 02 01 	lds	r30, 0x0102	; 0x800102 <CisloSloupce>
- 556:	f0 91 03 01 	lds	r31, 0x0103	; 0x800103 <CisloSloupce+0x1>
- 55a:	cf 01       	movw	r24, r30
- 55c:	88 0f       	add	r24, r24
- 55e:	99 1f       	adc	r25, r25
- 560:	e8 0f       	add	r30, r24
- 562:	f9 1f       	adc	r31, r25
- 564:	c9 01       	movw	r24, r18
- 566:	88 0f       	add	r24, r24
- 568:	99 1f       	adc	r25, r25
- 56a:	82 0f       	add	r24, r18
- 56c:	93 1f       	adc	r25, r19
- 56e:	88 0f       	add	r24, r24
- 570:	99 1f       	adc	r25, r25
+ 55e:	e0 91 02 01 	lds	r30, 0x0102	; 0x800102 <CisloSloupce>
+ 562:	f0 91 03 01 	lds	r31, 0x0103	; 0x800103 <CisloSloupce+0x1>
+ 566:	cf 01       	movw	r24, r30
+ 568:	88 0f       	add	r24, r24
+ 56a:	99 1f       	adc	r25, r25
+ 56c:	e8 0f       	add	r30, r24
+ 56e:	f9 1f       	adc	r31, r25
+ 570:	c9 01       	movw	r24, r18
  572:	88 0f       	add	r24, r24
  574:	99 1f       	adc	r25, r25
- 576:	88 0f       	add	r24, r24
- 578:	99 1f       	adc	r25, r25
- 57a:	e8 0f       	add	r30, r24
- 57c:	f9 1f       	adc	r31, r25
- 57e:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <CisloBarvy>
- 582:	90 91 05 01 	lds	r25, 0x0105	; 0x800105 <CisloBarvy+0x1>
+ 576:	82 0f       	add	r24, r18
+ 578:	93 1f       	adc	r25, r19
+ 57a:	88 0f       	add	r24, r24
+ 57c:	99 1f       	adc	r25, r25
+ 57e:	88 0f       	add	r24, r24
+ 580:	99 1f       	adc	r25, r25
+ 582:	88 0f       	add	r24, r24
+ 584:	99 1f       	adc	r25, r25
  586:	e8 0f       	add	r30, r24
  588:	f9 1f       	adc	r31, r25
- 58a:	ee 0f       	add	r30, r30
- 58c:	ff 1f       	adc	r31, r31
- 58e:	e5 5d       	subi	r30, 0xD5	; 213
- 590:	fe 4f       	sbci	r31, 0xFE	; 254
- 592:	80 81       	ld	r24, Z
- 594:	91 81       	ldd	r25, Z+1	; 0x01
- 596:	89 2b       	or	r24, r25
- 598:	89 f0       	breq	.+34     	; 0x5bc <RozsviceniRadkuDleBufferu+0x70>
+ 58a:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <CisloBarvy>
+ 58e:	90 91 05 01 	lds	r25, 0x0105	; 0x800105 <CisloBarvy+0x1>
+ 592:	e8 0f       	add	r30, r24
+ 594:	f9 1f       	adc	r31, r25
+ 596:	ee 0f       	add	r30, r30
+ 598:	ff 1f       	adc	r31, r31
+ 59a:	e5 5d       	subi	r30, 0xD5	; 213
+ 59c:	fe 4f       	sbci	r31, 0xFE	; 254
+ 59e:	80 81       	ld	r24, Z
+ 5a0:	91 81       	ldd	r25, Z+1	; 0x01
+ 5a2:	89 2b       	or	r24, r25
+ 5a4:	89 f0       	breq	.+34     	; 0x5c8 <RozsviceniRadkuDleBufferu+0x70>
 		{
 			PORTD |= 1 << Radky[i];
- 59a:	4b b1       	in	r20, 0x0b	; 11
- 59c:	f9 01       	movw	r30, r18
- 59e:	ee 0f       	add	r30, r30
- 5a0:	ff 1f       	adc	r31, r31
- 5a2:	e8 5f       	subi	r30, 0xF8	; 248
- 5a4:	fe 4f       	sbci	r31, 0xFE	; 254
- 5a6:	81 e0       	ldi	r24, 0x01	; 1
- 5a8:	90 e0       	ldi	r25, 0x00	; 0
- 5aa:	00 80       	ld	r0, Z
- 5ac:	02 c0       	rjmp	.+4      	; 0x5b2 <RozsviceniRadkuDleBufferu+0x66>
- 5ae:	88 0f       	add	r24, r24
- 5b0:	99 1f       	adc	r25, r25
- 5b2:	0a 94       	dec	r0
- 5b4:	e2 f7       	brpl	.-8      	; 0x5ae <RozsviceniRadkuDleBufferu+0x62>
- 5b6:	84 2b       	or	r24, r20
- 5b8:	8b b9       	out	0x0b, r24	; 11
- 5ba:	11 c0       	rjmp	.+34     	; 0x5de <RozsviceniRadkuDleBufferu+0x92>
+ 5a6:	4b b1       	in	r20, 0x0b	; 11
+ 5a8:	f9 01       	movw	r30, r18
+ 5aa:	ee 0f       	add	r30, r30
+ 5ac:	ff 1f       	adc	r31, r31
+ 5ae:	e8 5f       	subi	r30, 0xF8	; 248
+ 5b0:	fe 4f       	sbci	r31, 0xFE	; 254
+ 5b2:	81 e0       	ldi	r24, 0x01	; 1
+ 5b4:	90 e0       	ldi	r25, 0x00	; 0
+ 5b6:	00 80       	ld	r0, Z
+ 5b8:	02 c0       	rjmp	.+4      	; 0x5be <RozsviceniRadkuDleBufferu+0x66>
+ 5ba:	88 0f       	add	r24, r24
+ 5bc:	99 1f       	adc	r25, r25
+ 5be:	0a 94       	dec	r0
+ 5c0:	e2 f7       	brpl	.-8      	; 0x5ba <RozsviceniRadkuDleBufferu+0x62>
+ 5c2:	84 2b       	or	r24, r20
+ 5c4:	8b b9       	out	0x0b, r24	; 11
+ 5c6:	11 c0       	rjmp	.+34     	; 0x5ea <RozsviceniRadkuDleBufferu+0x92>
 		}
 		else
 		{
 			PORTD &= 255 - (1 << Radky[i]);
- 5bc:	4b b1       	in	r20, 0x0b	; 11
- 5be:	f9 01       	movw	r30, r18
- 5c0:	ee 0f       	add	r30, r30
- 5c2:	ff 1f       	adc	r31, r31
- 5c4:	e8 5f       	subi	r30, 0xF8	; 248
- 5c6:	fe 4f       	sbci	r31, 0xFE	; 254
- 5c8:	81 e0       	ldi	r24, 0x01	; 1
- 5ca:	90 e0       	ldi	r25, 0x00	; 0
- 5cc:	00 80       	ld	r0, Z
- 5ce:	02 c0       	rjmp	.+4      	; 0x5d4 <RozsviceniRadkuDleBufferu+0x88>
- 5d0:	88 0f       	add	r24, r24
- 5d2:	99 1f       	adc	r25, r25
- 5d4:	0a 94       	dec	r0
- 5d6:	e2 f7       	brpl	.-8      	; 0x5d0 <RozsviceniRadkuDleBufferu+0x84>
- 5d8:	80 95       	com	r24
- 5da:	84 23       	and	r24, r20
- 5dc:	8b b9       	out	0x0b, r24	; 11
+ 5c8:	4b b1       	in	r20, 0x0b	; 11
+ 5ca:	f9 01       	movw	r30, r18
+ 5cc:	ee 0f       	add	r30, r30
+ 5ce:	ff 1f       	adc	r31, r31
+ 5d0:	e8 5f       	subi	r30, 0xF8	; 248
+ 5d2:	fe 4f       	sbci	r31, 0xFE	; 254
+ 5d4:	81 e0       	ldi	r24, 0x01	; 1
+ 5d6:	90 e0       	ldi	r25, 0x00	; 0
+ 5d8:	00 80       	ld	r0, Z
+ 5da:	02 c0       	rjmp	.+4      	; 0x5e0 <RozsviceniRadkuDleBufferu+0x88>
+ 5dc:	88 0f       	add	r24, r24
+ 5de:	99 1f       	adc	r25, r25
+ 5e0:	0a 94       	dec	r0
+ 5e2:	e2 f7       	brpl	.-8      	; 0x5dc <RozsviceniRadkuDleBufferu+0x84>
+ 5e4:	80 95       	com	r24
+ 5e6:	84 23       	and	r24, r20
+ 5e8:	8b b9       	out	0x0b, r24	; 11
 	}
 }
 
 void RozsviceniRadkuDleBufferu()
 {
 	for (int i = 0; i < 8; i++)
- 5de:	2f 5f       	subi	r18, 0xFF	; 255
- 5e0:	3f 4f       	sbci	r19, 0xFF	; 255
- 5e2:	28 30       	cpi	r18, 0x08	; 8
- 5e4:	31 05       	cpc	r19, r1
- 5e6:	0c f4       	brge	.+2      	; 0x5ea <RozsviceniRadkuDleBufferu+0x9e>
- 5e8:	b4 cf       	rjmp	.-152    	; 0x552 <RozsviceniRadkuDleBufferu+0x6>
+ 5ea:	2f 5f       	subi	r18, 0xFF	; 255
+ 5ec:	3f 4f       	sbci	r19, 0xFF	; 255
+ 5ee:	28 30       	cpi	r18, 0x08	; 8
+ 5f0:	31 05       	cpc	r19, r1
+ 5f2:	0c f4       	brge	.+2      	; 0x5f6 <RozsviceniRadkuDleBufferu+0x9e>
+ 5f4:	b4 cf       	rjmp	.-152    	; 0x55e <RozsviceniRadkuDleBufferu+0x6>
 		else
 		{
 			PORTD &= 255 - (1 << Radky[i]);
 		}
 	}
 }
- 5ea:	08 95       	ret
+ 5f6:	08 95       	ret
 
-000005ec <setup>:
+000005f8 <setup>:
 
 void setup()
 {
 	// set received/requested callbacks
 	I2C_setCallbacks(I2C_received, I2C_requested);
- 5ec:	69 e5       	ldi	r22, 0x59	; 89
- 5ee:	71 e0       	ldi	r23, 0x01	; 1
- 5f0:	8b eb       	ldi	r24, 0xBB	; 187
- 5f2:	90 e0       	ldi	r25, 0x00	; 0
- 5f4:	0e 94 53 00 	call	0xa6	; 0xa6 <I2C_setCallbacks>
+ 5f8:	6f e5       	ldi	r22, 0x5F	; 95
+ 5fa:	71 e0       	ldi	r23, 0x01	; 1
+ 5fc:	8b eb       	ldi	r24, 0xBB	; 187
+ 5fe:	90 e0       	ldi	r25, 0x00	; 0
+ 600:	0e 94 53 00 	call	0xa6	; 0xa6 <I2C_setCallbacks>
 
 	// init I2C
 	I2C_init(I2C_ADDR);
- 5f8:	80 e1       	ldi	r24, 0x10	; 16
- 5fa:	0e 94 5c 00 	call	0xb8	; 0xb8 <I2C_init>
+ 604:	80 e1       	ldi	r24, 0x10	; 16
+ 606:	0e 94 5c 00 	call	0xb8	; 0xb8 <I2C_init>
 	
 	DDRB = 0xFF;
- 5fe:	8f ef       	ldi	r24, 0xFF	; 255
- 600:	84 b9       	out	0x04, r24	; 4
+ 60a:	8f ef       	ldi	r24, 0xFF	; 255
+ 60c:	84 b9       	out	0x04, r24	; 4
 	DDRC = 0x00;
- 602:	17 b8       	out	0x07, r1	; 7
+ 60e:	17 b8       	out	0x07, r1	; 7
 	DDRD = 0b11111111;
- 604:	8a b9       	out	0x0a, r24	; 10
+ 610:	8a b9       	out	0x0a, r24	; 10
 	
 	PORTC |= (1 << PINC4);
- 606:	88 b1       	in	r24, 0x08	; 8
- 608:	80 61       	ori	r24, 0x10	; 16
- 60a:	88 b9       	out	0x08, r24	; 8
+ 612:	88 b1       	in	r24, 0x08	; 8
+ 614:	80 61       	ori	r24, 0x10	; 16
+ 616:	88 b9       	out	0x08, r24	; 8
 	PORTC |= (1 << PINC5);
- 60c:	88 b1       	in	r24, 0x08	; 8
- 60e:	80 62       	ori	r24, 0x20	; 32
- 610:	88 b9       	out	0x08, r24	; 8
- 612:	08 95       	ret
+ 618:	88 b1       	in	r24, 0x08	; 8
+ 61a:	80 62       	ori	r24, 0x20	; 32
+ 61c:	88 b9       	out	0x08, r24	; 8
+ 61e:	08 95       	ret
 
-00000614 <main>:
+00000620 <main>:
 }
 
 int main()
 {
 	setup();
- 614:	0e 94 f6 02 	call	0x5ec	; 0x5ec <setup>
+ 620:	0e 94 fc 02 	call	0x5f8	; 0x5f8 <setup>
 	InicializaceRegistru();
- 618:	0e 94 5a 01 	call	0x2b4	; 0x2b4 <InicializaceRegistru>
+ 624:	0e 94 60 01 	call	0x2c0	; 0x2c0 <InicializaceRegistru>
 	VynulovaniBufferu();
- 61c:	0e 94 c4 01 	call	0x388	; 0x388 <VynulovaniBufferu>
+ 628:	0e 94 ca 01 	call	0x394	; 0x394 <VynulovaniBufferu>
 	Buffer[0][0][0] = 1;
- 620:	81 e0       	ldi	r24, 0x01	; 1
- 622:	90 e0       	ldi	r25, 0x00	; 0
- 624:	90 93 2c 01 	sts	0x012C, r25	; 0x80012c <Buffer+0x1>
- 628:	80 93 2b 01 	sts	0x012B, r24	; 0x80012b <Buffer>
+ 62c:	81 e0       	ldi	r24, 0x01	; 1
+ 62e:	90 e0       	ldi	r25, 0x00	; 0
+ 630:	90 93 2c 01 	sts	0x012C, r25	; 0x80012c <Buffer+0x1>
+ 634:	80 93 2b 01 	sts	0x012B, r24	; 0x80012b <Buffer>
 	while (1)
 	{
 		cli();
- 62c:	f8 94       	cli
+ 638:	f8 94       	cli
 		ZhasnutiRadku();
- 62e:	0e 94 8c 02 	call	0x518	; 0x518 <ZhasnutiRadku>
+ 63a:	0e 94 92 02 	call	0x524	; 0x524 <ZhasnutiRadku>
 		PosunRegistru();
- 632:	0e 94 f9 01 	call	0x3f2	; 0x3f2 <PosunRegistru>
+ 63e:	0e 94 ff 01 	call	0x3fe	; 0x3fe <PosunRegistru>
 		RozsviceniRadkuDleBufferu();
- 636:	0e 94 a6 02 	call	0x54c	; 0x54c <RozsviceniRadkuDleBufferu>
+ 642:	0e 94 ac 02 	call	0x558	; 0x558 <RozsviceniRadkuDleBufferu>
 		sei();
- 63a:	78 94       	sei
- 63c:	f7 cf       	rjmp	.-18     	; 0x62c <main+0x18>
+ 646:	78 94       	sei
+ 648:	f7 cf       	rjmp	.-18     	; 0x638 <main+0x18>
 
-0000063e <_exit>:
- 63e:	f8 94       	cli
+0000064a <_exit>:
+ 64a:	f8 94       	cli
 
-00000640 <__stop_program>:
- 640:	ff cf       	rjmp	.-2      	; 0x640 <__stop_program>
+0000064c <__stop_program>:
+ 64c:	ff cf       	rjmp	.-2      	; 0x64c <__stop_program>
