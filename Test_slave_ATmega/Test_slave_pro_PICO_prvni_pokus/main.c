@@ -61,14 +61,14 @@ void I2C_received(uint8_t received_data)
 	if (Rezim == 0)
 	{
 		for(int i = 0; i < 8; i++){
-			Buffer[Pocitadlo_prijmu_radky][i][0] = (data >> i) & 1;
+			Buffer[Pocitadlo_prijmu_radky][i][0] = (data >> 7 - i) & 1;
 		}
 		Pocitadlo_prijmu_radky++;
 		if (Pocitadlo_prijmu_radky == 8) Pocitadlo_prijmu_radky = 0;
 	}
 	else if (Rezim == 1){
 		for(int i = 0; i < 8; i++){
-			Buffer[Pocitadlo_prijmu_radky][i][Pocitadlo_prijmu_barvy] = (data >> i) & 1;
+			Buffer[Pocitadlo_prijmu_radky][i][Pocitadlo_prijmu_barvy] = (data >> 7 - i) & 1;
 		}
 		Pocitadlo_prijmu_barvy++;
 		if (Pocitadlo_prijmu_barvy == 3){

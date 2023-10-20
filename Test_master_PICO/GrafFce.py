@@ -2,7 +2,7 @@ from Master_code import *
 import time
 import random
 
-tts = 5
+tts = 0.1
 
 buf = [
     [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
@@ -12,16 +12,13 @@ buf = [
     [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
     [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
     [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]],
-    [[1,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
+    [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
     ]
 
 # Zaplnění obrazovky
 for x in range(8):
     barva = random.randint(0,2)
     buf[x][x][barva] = 1
-    print("---")
-    for i in range(8):
-        print(buf[i])
     posli_buffer_rgb(buf)
     time.sleep(tts)
     
@@ -31,18 +28,18 @@ narust = False
 while True:
     # Řádek kde to mizí
     for i in range(8):
-        buf[0][i] = [0,0,0]
+        buf[i][0] = [0,0,0]
         
     # Posun
     for i in range(7):
         for j in range(8):
-            buf[i][j] = buf[i+1][j]
+            buf[j][i] = buf[j][i+1]
     
     # Přidání novýho
     for i in range(8):
-        buf[7][i] = [0,0,0]
+        buf[i][7] = [0,0,0]
     barva = random.randint(0,2)
-    buf[7][x][barva] = 1
+    buf[x][7][barva] = 1
     
     if narust:
         x += 1
