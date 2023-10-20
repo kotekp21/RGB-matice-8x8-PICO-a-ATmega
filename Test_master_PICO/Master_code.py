@@ -381,7 +381,7 @@ buf = [
     [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]]
     ]
 
-posli_buffer_rgb(buf)
+#posli_buffer_rgb(buf)
 
 """while True:
     buf[random.randint(0,7)][random.randint(0,7)][random.randint(0,2)] = random.randint(0,1)
